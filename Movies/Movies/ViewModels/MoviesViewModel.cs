@@ -161,6 +161,7 @@ namespace Movies.ViewModels
         {
             try
             {
+                List<Result> list = new List<Result>();
                 Response response = await apiServices.Get<MovieModel>(Routes.URL, Routes.endpointtopMovies);
                 if (!response.IsSuccess)
                 {
@@ -176,8 +177,13 @@ namespace Movies.ViewModels
                     item.vote_average = Convert.ToInt32(Math.Round(Convert.ToDouble(calification), 0, MidpointRounding.AwayFromZero));
                 }
 
-                RecommendedMovies = responseMovies.results.ToList();
-                _recommendedtmpMovies = responseMovies.results.ToList();
+                if (responseMovies.results.Count > 10)
+                    list = responseMovies.results.GetRange(0, 10);
+                else
+                    list = responseMovies.results;
+
+                RecommendedMovies = list;
+                _recommendedtmpMovies = list;
             }
             catch (Exception ex)
             {
@@ -191,6 +197,7 @@ namespace Movies.ViewModels
         {
             try
             {
+                List<Result> list = new List<Result>();
                 Response response = await apiServices.Get<MovieModel>(Routes.URL, Routes.endpointupcommingMovies);
                 if (!response.IsSuccess)
                 {
@@ -206,8 +213,13 @@ namespace Movies.ViewModels
                     item.vote_average = Convert.ToInt32(Math.Round(Convert.ToDouble(calification), 0, MidpointRounding.AwayFromZero));
                 }
 
-                PremieresMovies = responseMovies.results.ToList();
-                _premierestmpMovies = responseMovies.results.ToList();
+                if (responseMovies.results.Count > 10)
+                    list = responseMovies.results.GetRange(0, 10);
+                else
+                    list = responseMovies.results;
+
+                PremieresMovies = list;
+                _premierestmpMovies = list;
             }
             catch (Exception ex)
             {
@@ -221,6 +233,7 @@ namespace Movies.ViewModels
         {
             try
             {
+                List<Result> list = new List<Result>();
                 Response response = await apiServices.Get<MovieModel>(Routes.URL, Routes.endpointpopularMovies);
                 if (!response.IsSuccess)
                 {
@@ -236,8 +249,13 @@ namespace Movies.ViewModels
                     item.vote_average = Convert.ToInt32(Math.Round(Convert.ToDouble(calification), 0, MidpointRounding.AwayFromZero));
                 }
 
-                PopularMovies = responseMovies.results.ToList();
-                _populartmpMovies = responseMovies.results.ToList();
+                if (responseMovies.results.Count > 10)
+                    list = responseMovies.results.GetRange(0, 10);
+                else
+                    list = responseMovies.results;
+
+                PopularMovies = list;
+                _populartmpMovies = list;
             }
             catch (Exception ex)
             {
