@@ -124,10 +124,10 @@
                                                                        ImageHeight="12"
                                                                        ImageWidth="12"
                                                                        HorizontalOptions="Start"
-                                                                       FlowDirection="LeftToRight"
                                                                        EmptyStarImage="empty"
                                                                        FillStarImage="fill"
-                                                                       Margin="5,0,0,0"/>
+                                                                       Margin="5,0,0,0"
+                                                                       IsEnabled="False"/>
                                                 </StackLayout>
                                             </DataTemplate>
                                         </CollectionView.ItemTemplate>
@@ -207,10 +207,10 @@
                                                                        ImageHeight="12"
                                                                        ImageWidth="12"
                                                                        HorizontalOptions="Start"
-                                                                       FlowDirection="LeftToRight"
                                                                        EmptyStarImage="empty"
                                                                        FillStarImage="fill"
-                                                                       Margin="5,0,0,0"/>
+                                                                       Margin="5,0,0,0"
+                                                                       IsEnabled="False"/>
                                                 </StackLayout>
                                             </DataTemplate>
                                         </CollectionView.ItemTemplate>
@@ -290,10 +290,10 @@
                                                                        ImageHeight="12"
                                                                        ImageWidth="12"
                                                                        HorizontalOptions="Start"
-                                                                       FlowDirection="LeftToRight"
                                                                        EmptyStarImage="empty"
                                                                        FillStarImage="fill"
-                                                                       Margin="5,0,0,0"/>
+                                                                       Margin="5,0,0,0"
+                                                                       IsEnabled="False"/>
                                                 </StackLayout>
                                             </DataTemplate>
                                         </CollectionView.ItemTemplate>

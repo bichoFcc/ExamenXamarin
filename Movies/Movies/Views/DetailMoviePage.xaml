@@ -4,7 +4,7 @@
              x:Class="Movies.Views.DetailMoviePage"
              xmlns:fRating="clr-namespace:Rating;assembly=Rating"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#1C1C1C"> 
+             BackgroundColor="#424242"> 
 
     <ScrollView>
         <Grid>
@@ -92,10 +92,10 @@
                                            ImageHeight="12"
                                            ImageWidth="12"
                                            HorizontalOptions="StartAndExpand"
-                                           FlowDirection="LeftToRight"
                                            EmptyStarImage="empty"
                                            FillStarImage="fill"
-                                           Margin="0,0,30,0"/>
+                                           Margin="0,0,30,0"
+                                           IsEnabled="False"/>
                     </StackLayout>
                 </Grid>
             </StackLayout>
