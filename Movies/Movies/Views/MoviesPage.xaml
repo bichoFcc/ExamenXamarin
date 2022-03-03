@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fRating="clr-namespace:Rating;assembly=Rating"
+             x:Class="Movies.Views.MoviesPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Title and search bar-->
+            <StackLayout Grid.Row="0" Grid.Column="0">
+                <Frame BackgroundColor="#6496c8" CornerRadius="0">
+                    <StackLayout>
+                        <Label Text="{Binding Question, Mode=OneWay}" 
+                               HorizontalTextAlignment="Start" 
+                               TextColor="White"
+                               FontSize="30"
+                               FontAttributes="Bold"
+                               Margin="15,15,15,15"/> 
+
+                        <Frame Padding="0" Margin="15,0,15,60" BackgroundColor="#F0F0F0" HasShadow="False" BorderColor="WhiteSmoke" CornerRadius="15" HeightRequest="30">
+                            <SearchBar Text="{Binding SearchText}"
+                                       Placeholder="{Binding Search, Mode=OneWay}"
+                                       BackgroundColor="#F0F0F0"
+                                       CancelButtonColor="#585858"
+                                       TextColor="#585858"
+                                       FontSize="Default"/> 
+                        </Frame>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+            <!--List movies-->
+            <StackLayout Grid.Row="1" Grid.Column="0" Margin="0,-40,0,0" VerticalOptions="FillAndExpand">
+                <Frame BackgroundColor="#424242" CornerRadius="15">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--Top Rate movies-->
+                        <StackLayout Grid.Row="0" Grid.Column="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout Grid.Row="0" Grid.Column="0">
+                                    <Label Text="{Binding Recommended, Mode=OneWay}" 
+                                           HorizontalTextAlignment="Start" 
+                                           TextColor="WhiteSmoke"
+                                           FontSize="Default"
+                                           FontAttributes="Bold"/> 
+                                </StackLayout>
+
+                                <StackLayout Grid.Row="0" Grid.Column="1">
+                                    <Label Text="{Binding SeeAll, Mode=OneWay}" 
+                                           HorizontalTextAlignment="Start" 
+                                           TextColor="WhiteSmoke"
+                                           FontSize="Default"/> 
+                                </StackLayout>
+
+                                <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                                    <CollectionView x:Name="listMovies" ItemsSource="{Binding RecommendedMovies, Mode=TwoWay}" SelectionMode="None" HeightRequest="310">
+                                        <CollectionView.EmptyView>
+                                            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                                <Label FontAttributes="Bold"
+                                                       FontSize="18"
+                                                       TextColor="White"
+                                                       HorizontalTextAlignment="Center"
+                                                       VerticalOptions="CenterAndExpand"
+                                                       Text="No items to display" /> 
+                                            </StackLayout>
+                                        </CollectionView.EmptyView>
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Horizontal"
+                                                             HorizontalItemSpacing="10"/>
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout>
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.SelectedMovie, Source={x:Reference listMovies}}"
+                                                                              CommandParameter="{Binding .}"/>
+                                                    </StackLayout.GestureRecognizers>
+                                                    
+                                                    <Frame Padding="0" CornerRadius="20" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                                                        <Image Source="{Binding poster_path, StringFormat='https://image.tmdb.org/t/p/w500{0}'}"
+                                                               HeightRequest="250"
+                                                               WidthRequest="200"
+                                                               Aspect="Fill"
+                                                               Margin="0"/> 
+                                                    </Frame>
+
+                                                    <Label Text="{Binding title}" 
+                                                           HorizontalTextAlignment="Start"
+                                                           TextColor="White"
+                                                           FontSize="13"
+                                                           FontAttributes="Bold"
+                                                           Margin="5,0,0,0"/>
+
+                                                    <fRating:RatingBar SelectedStarValue="{Binding vote_average}"
+                                                                       ImageHeight="12"
+                                                                       ImageWidth="12"
+                                                                       HorizontalOptions="Start"
+                                                                       FlowDirection="LeftToRight"
+                                                                       EmptyStarImage="empty"
+                                                                       FillStarImage="fill"
+                                                                       Margin="5,0,0,0"/>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+
+                        <!--Upcoming movie releases-->
+                        <StackLayout Grid.Row="1" Grid.Column="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout Grid.Row="0" Grid.Column="0">
+                                    <Label Text="{Binding NextReleases, Mode=OneWay}" 
+                                           HorizontalTextAlignment="Start" 
+                                           TextColor="WhiteSmoke"
+                                           FontSize="Default"
+                                           FontAttributes="Bold"/> 
+                                </StackLayout>
+
+                                <StackLayout Grid.Row="0" Grid.Column="1">
+                                    <Label Text="{Binding SeeAll, Mode=OneWay}" 
+                                           HorizontalTextAlignment="Start" 
+                                           TextColor="WhiteSmoke"
+                                           FontSize="Default"/> 
+                                </StackLayout>
+
+                                <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                                    <CollectionView x:Name="listpremierMovies" ItemsSource="{Binding PremieresMovies}" SelectionMode="None" HeightRequest="310">
+                                        <CollectionView.EmptyView>
+                                            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                                <Label FontAttributes="Bold"
+                                                       FontSize="18"
+                                                       TextColor="White"
+                                                       HorizontalTextAlignment="Center"
+                                                       VerticalOptions="CenterAndExpand"
+                                                       Text="No items to display" />
+                                            </StackLayout>
+                                        </CollectionView.EmptyView>
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Horizontal"
+                                                             HorizontalItemSpacing="10"/>
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout>
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.SelectedMovie, Source={x:Reference listpremierMovies}}"
+                                                                              CommandParameter="{Binding .}"/>
+                                                    </StackLayout.GestureRecognizers>
+                                                    
+                                                    <Frame Padding="0" CornerRadius="20" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                                                        <Image Source="{Binding poster_path, StringFormat='https://image.tmdb.org/t/p/w500{0}'}"
+                                                               HeightRequest="250"
+                                                               WidthRequest="200"
+                                                               Aspect="Fill"
+                                                               Margin="0"/>
+                                                    </Frame>
+
+                                                    <Label Text="{Binding title}" 
+                                                           HorizontalTextAlignment="Start"
+                                                           TextColor="White"
+                                                           FontSize="13"
+                                                           FontAttributes="Bold"
+                                                           Margin="5,0,0,0"/>
+
+                                                    <fRating:RatingBar SelectedStarValue="{Binding vote_average}"
+                                                                       ImageHeight="12"
+                                                                       ImageWidth="12"
+                                                                       HorizontalOptions="Start"
+                                                                       FlowDirection="LeftToRight"
+                                                                       EmptyStarImage="empty"
+                                                                       FillStarImage="fill"
+                                                                       Margin="5,0,0,0"/>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+
+                        <!--Popular Movies-->
+                        <StackLayout Grid.Row="2" Grid.Column="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout Grid.Row="0" Grid.Column="0">
+                                    <Label Text="{Binding Popular, Mode=OneWay}" 
+                                           HorizontalTextAlignment="Start" 
+                                           TextColor="WhiteSmoke"
+                                           FontSize="Default"
+                                           FontAttributes="Bold"/> 
+                                </StackLayout>
+
+                                <StackLayout Grid.Row="0" Grid.Column="1">
+                                    <Label Text="{Binding SeeAll, Mode=OneWay}" 
+                                           HorizontalTextAlignment="Start" 
+                                           TextColor="WhiteSmoke"
+                                           FontSize="Default"/> 
+                                </StackLayout>
+
+                                <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                                    <CollectionView x:Name="listpopularMovies" ItemsSource="{Binding PopularMovies}" SelectionMode="None" HeightRequest="310">
+                                        <CollectionView.EmptyView>
+                                            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                                <Label FontAttributes="Bold"
+                                                       FontSize="18"
+                                                       TextColor="White"
+                                                       HorizontalTextAlignment="Center"
+                                                       VerticalOptions="CenterAndExpand"
+                                                       Text="No items to display" />
+                                            </StackLayout>
+                                        </CollectionView.EmptyView>
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Horizontal"
+                                                             HorizontalItemSpacing="10"/>
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout>
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.SelectedMovie, Source={x:Reference listpopularMovies}}"
+                                                                              CommandParameter="{Binding .}"/>
+                                                    </StackLayout.GestureRecognizers>
+                                                    
+                                                    <Frame Padding="0" CornerRadius="20" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                                                        <Image Source="{Binding poster_path, StringFormat='https://image.tmdb.org/t/p/w500{0}'}"
+                                                               HeightRequest="250"
+                                                               WidthRequest="200"
+                                                               Aspect="Fill"
+                                                               Margin="0"/>
+                                                    </Frame>
+
+                                                    <Label Text="{Binding title}" 
+                                                           HorizontalTextAlignment="Start"
+                                                           TextColor="White"
+                                                           FontSize="13"
+                                                           FontAttributes="Bold"
+                                                           Margin="5,0,0,0"/>
+
+                                                    <fRating:RatingBar SelectedStarValue="{Binding vote_average}"
+                                                                       ImageHeight="12"
+                                                                       ImageWidth="12"
+                                                                       HorizontalOptions="Start"
+                                                                       FlowDirection="LeftToRight"
+                                                                       EmptyStarImage="empty"
+                                                                       FillStarImage="fill"
+                                                                       Margin="5,0,0,0"/>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>
